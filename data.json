@@ -1,0 +1,17 @@
+{
+  "categories":[
+    {"id": 1, "name": "Смвртфоны"},
+    {"id": 2, "name": "Ноутбуку"},
+    {"id": 3, "name": "Аксессуары"},
+    {"id": 4, "name": "Ноутбуки (специальные)"}
+  ],
+  "products": [
+    {"id": 1, "category_id": 1, "name": "Смартфон X1", "price": 10000, "description": "Смартфон с отличной камерой"},
+    {"id": 2, "category_id": 1, "name": "Смартфон Y2", "price": 12000, "description": "Бюджетный смартфон с хорошим экраном"},
+    {"id": 3, "category_id": 2, "name": "Ноутбук ProBook", "price": 45000, "description": "Мошный ноутбук для работы и игр"},
+    {"id": 4, "category_id": 2, "name": "Ноутбук AirLite", "price": 30000, "description": "Лёгкий ноутбук для путешествий"},
+    {"id": 5, "category_id": 3, "name": "Наушники SoundBeat", "price": 3000, "description": "Беспроводные наушники"},
+    {"id": 6, "category_id": 3, "name": "Пауэрбанк PowerMax", "price": 2000, "description": "Мощный внешний аккумулятор"},
+    {"id": 7, "category_id": 4, "name": "Ноутбук ProBook", "price": 12000, "description": "Мошный ноутбук для работы и игр"}
+  ]
+}
