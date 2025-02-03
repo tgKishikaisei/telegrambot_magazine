@@ -91,7 +91,3 @@ Other credentials/config as needed
 - Admin Notification: The bot notifies the admin (ADMIN_ID) with order details upon checkout. 
 - Contributing 
 - Feel free to fork and submit pull requests. If you find any bugs or have suggestions, open an issue in the repository.
-
-# License
-- No specific license is declared by default; you can add an MIT License or other if needed.
-
