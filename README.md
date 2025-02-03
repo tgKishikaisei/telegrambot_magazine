@@ -49,22 +49,21 @@ The bot can send a message to an admin (via ADMIN_ID) whenever a new order is cr
 - TELEGRAM_BOT_TOKEN
 ADMIN_ID
 Other credentials/config as needed
+
 # Installation & Setup
 ### Clone the repository:
-
 
     git clone https://github.com/tgKishikaisei/telegrambot_magazine.git
 
     cd telegrambot_magazine
-- Create a virtual environment (optional but recommended):
 
+### Create a virtual environment (optional but recommended):
 
     python -m venv venv
     
     source venv/bin/activate  # or "venv\Scripts\activate" on Windows
 
 ### Install dependencies:
-
 
     pip install -r requirements.txt
 
