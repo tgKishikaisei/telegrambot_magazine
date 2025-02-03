@@ -2,13 +2,14 @@ import asyncio
 import json
 import os
 
-from database import get_session, engine
-from models import Category, Product
+from bot.database.session import get_session, engine
+from bot.models import Category, Product
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 
-JSON_FILE = "data.json"  # путь к вашему JSON
-
+# Определяем базовую директорию текущего файла и формируем путь к файлу data.json
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+JSON_FILE = os.path.join(BASE_DIR, "../../data/data.json")  # Если структура репозитория, как описано выше
 
 async def load_data():
     # 1) Читаем data.json
@@ -25,8 +26,8 @@ async def load_data():
     async with get_session() as session:
         # 2) Вставляем (или обновляем) категории
         for cat in categories_data:
-            cat_id = cat["id"]
-            cat_name = cat["name"]
+            cat_id = cat.get("id")
+            cat_name = cat.get("name")
 
             # Проверим, есть ли уже такая категория в базе
             stmt = select(Category).where(Category.id == cat_id)
@@ -34,15 +35,16 @@ async def load_data():
             db_cat = result.scalar_one_or_none()
 
             if db_cat is None:
-                # Создаём новую
+                # Создаём новую категорию
                 new_cat = Category(id=cat_id, name=cat_name)
                 session.add(new_cat)
+                print(f"Добавлена категория: {cat_name}")
             else:
-                # Обновляем name, если нужно
+                # Обновляем название, если необходимо
                 db_cat.name = cat_name
+                print(f"Обновлена категория: {cat_name}")
 
-        # 3) Сохраняем изменения, чтобы категории точно были созданы
-        #    (иначе products не сможет ссылаться на категории)
+        # 3) Сохраняем изменения, чтобы категории точно были созданы (иначе товары не смогут ссылаться на них)
         try:
             await session.commit()
         except IntegrityError as e:
@@ -52,11 +54,11 @@ async def load_data():
 
         # 4) Вставляем (или обновляем) товары
         for prod in products_data:
-            p_id = prod["id"]
-            p_cat_id = prod["category_id"]
-            p_name = prod["name"]
-            p_price = prod["price"]
-            p_desc = prod["description"]
+            p_id = prod.get("id")
+            p_cat_id = prod.get("category_id")
+            p_name = prod.get("name")
+            p_price = prod.get("price")
+            p_desc = prod.get("description")
 
             # Проверим, есть ли такая категория
             stmt_cat = select(Category).where(Category.id == p_cat_id)
@@ -65,7 +67,7 @@ async def load_data():
 
             if db_cat is None:
                 print(f"Пропускаем товар id={p_id}: Категории {p_cat_id} нет в базе!")
-                continue  # либо пропустить, либо создать категорию автоматически
+                continue  # либо можно создать категорию автоматически
 
             # Проверим, есть ли уже такой товар
             stmt_prod = select(Product).where(Product.id == p_id)
@@ -73,7 +75,7 @@ async def load_data():
             db_prod = result_prod.scalar_one_or_none()
 
             if db_prod is None:
-                # Создаём новый
+                # Создаём новый товар
                 new_prod = Product(
                     id=p_id,
                     name=p_name,
@@ -82,12 +84,14 @@ async def load_data():
                     category_id=p_cat_id
                 )
                 session.add(new_prod)
+                print(f"Добавлен товар: {p_name}")
             else:
-                # Обновляем поля
+                # Обновляем поля товара
                 db_prod.name = p_name
                 db_prod.price = p_price
                 db_prod.description = p_desc
                 db_prod.category_id = p_cat_id
+                print(f"Обновлен товар: {p_name}")
 
         # 5) Пробуем зафиксировать изменения
         try:
@@ -96,7 +100,6 @@ async def load_data():
         except IntegrityError as e:
             await session.rollback()
             print("Ошибка при вставке товаров:", e)
-
 
 if __name__ == "__main__":
     asyncio.run(load_data())

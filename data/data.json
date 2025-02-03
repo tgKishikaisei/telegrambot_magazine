@@ -6,7 +6,7 @@
     {"id": 4, "name": "Ноутбуки (специальные)"}
   ],
   "products": [
-    {"id": 1, "category_id": 1, "name": "Смартфон X1", "price": 10000, "description": "Смартфон с отличной камерой"},
+    {"id": 1, "category_id": 1, "name": "Смартфон X1", "price": 10000, "description": "Смартфон с отличной камерой","photo": "C:\\Users\\Behruz\\OneDrive\\Рабочий стол\\ART\\— fadiyan, white doe.jpg"},
     {"id": 2, "category_id": 1, "name": "Смартфон Y2", "price": 12000, "description": "Бюджетный смартфон с хорошим экраном"},
     {"id": 3, "category_id": 2, "name": "Ноутбук ProBook", "price": 45000, "description": "Мошный ноутбук для работы и игр"},
     {"id": 4, "category_id": 2, "name": "Ноутбук AirLite", "price": 30000, "description": "Лёгкий ноутбук для путешествий"},

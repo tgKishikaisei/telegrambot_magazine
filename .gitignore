@@ -5,3 +5,4 @@ venv/
 *.env
 alembic.ini
 backup.sql
+tests/
