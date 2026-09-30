@@ -1,0 +1,5 @@
+-c requirements.txt
+pytest>=8
+pytest-asyncio>=0.24
+aiosqlite>=0.20
+pip-audit>=2.9

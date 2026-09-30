@@ -44,9 +44,10 @@ async def order_status(message: types.Message):
             await message.answer("У вас пока нет заказов.")
             return
         # Получаем последний заказ
-        stmt_order = select(Order).where(Order.user_id == db_user.id).order_by(Order.id.desc())
+        stmt_order = select(Order).where(Order.user_id == db_user.id).order_by(Order.id.desc()).limit(1)
         result_order = await session.execute(stmt_order)
-        last_order = result_order.scalar_one_or_none()
+        # scalar_one_or_none() падал с MultipleResultsFound, как только у пользователя больше одного заказа.
+        last_order = result_order.scalars().first()
         if not last_order:
             await message.answer("У вас пока нет заказов.")
         else:

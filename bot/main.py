@@ -6,12 +6,14 @@ from dotenv import load_dotenv
 import os
 
 from bot.bot_instance import bot
-from handlers import register_all_handlers
+from bot.handlers import register_all_handlers
 
 load_dotenv()
-ADMIN_ID = int(os.getenv("ADMIN_ID"))
-if not ADMIN_ID:
-    raise ValueError("ADMIN_ID не установлен в .env")
+# Понятная ошибка при пустом ADMIN_ID вместо TypeError из int(None).
+_admin_id = os.getenv("ADMIN_ID", "")
+if not _admin_id.strip().isdigit():
+    raise ValueError("ADMIN_ID не установлен в .env (нужен числовой Telegram ID)")
+ADMIN_ID = int(_admin_id)
 
 # Создаём объекты бота и диспетчера
 

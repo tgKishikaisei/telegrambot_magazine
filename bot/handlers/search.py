@@ -168,7 +168,7 @@ async def text_handler(message: types.Message, state):
         ])
         await message.answer(f"Заказ #{order_id} оформлен! Мы с вами свяжемся.", reply_markup=markup)
         await state.clear()
-        from bot.main import bot
+        # bot уже импортирован из bot.bot_instance: импорт из bot.main был циклическим.
         await bot.send_message(
             chat_id=os.getenv("ADMIN_ID"),
             text=f"Новый заказ #{order_id} от пользователя {telegram_id} на сумму {data_state.get('total', 0)} руб."
