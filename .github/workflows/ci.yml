@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Зависимости
-        run: pip install --require-hashes -r requirements-dev.txt
+        run: pip install --require-hashes -r requirements.txt -r requirements-dev.txt
       - name: Тесты
         run: python -m pytest -q
       - name: pip-audit
